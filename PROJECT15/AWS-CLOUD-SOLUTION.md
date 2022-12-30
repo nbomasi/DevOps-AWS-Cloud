@@ -43,9 +43,10 @@ aws iam update-user --user-name Ashley --new-user-name DevOps : To rename user f
 **7. Creating security group:**
 * ALB: Internet facing, so https and http ports be opened.
 
-* **Bastion Servers:** Access to the Bastion servers should be allowed only from workstations(PC thru which to access the bastion) that need to SSH into the bastion servers. Hence, you can use your workstation public IP address. To get this information, simply go to your terminal and type curl ```markdown
-www.canhazip.com
-```
+* **Bastion Servers:** Access to the Bastion servers should be allowed only from workstations(PC thru which to access the bastion) that need to SSH into the bastion servers. Hence, you can use your workstation public IP address. To get this information, simply go to your terminal and type 
+
+curl www.canhazip.com
+
 
 *** Webservers:** Access to Webservers should only be allowed from the Nginx servers. Since we do not have the servers created yet, just put some dummy records as a place holder, we will update it later.
 
@@ -70,7 +71,16 @@ Note: A total of 7 security groups were create: int-ALB; Ext-ALB; Nginx; webserv
 
  4. Create autoscaling from the target group
 
-3. Creating 3 elastic public IPs: 
+ 5. Create 3 centOs instances (Bastion, nginx and web servers)
+
+ **The above 4 steps will be repead for reverse-proxy nginx server and webserver**
+
+**Note: Package installation steps are in the file name "installation.conf"**
+
+**Note: Target group is meant for servers that are to be attached to LBs**
+
+ 
+
 
 > internet gateway for VPC > subnet (public and Private) > route table (public and private)
 
