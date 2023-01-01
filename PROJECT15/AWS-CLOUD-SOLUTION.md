@@ -26,6 +26,7 @@ aws iam update-user --user-name Ashley --new-user-name DevOps : To rename user f
 
 3. Create SSl/TLS certificates
 
+==================================================================================================================================================
 ## B. CREATING VIRTUAL PRIVATE CLOUD (VPC): SMILE-VPC
 
 **1. VPC:** smile-vpc created
@@ -41,7 +42,8 @@ aws iam update-user --user-name Ashley --new-user-name DevOps : To rename user f
 **6. Create 3 Elastic IPs:** 34.232.225.171
 
 **7. Creating security group:**
-* ALB: Internet facing, so https and http ports be opened.
+
+* **ALB:** Internet facing, so https and http ports be opened.
 
 * **Bastion Servers:** Access to the Bastion servers should be allowed only from workstations(PC thru which to access the bastion) that need to SSH into the bastion servers. Hence, you can use your workstation public IP address. To get this information, simply go to your terminal and type 
 
@@ -54,14 +56,15 @@ curl www.canhazip.com
 
 Note: A total of 7 security groups were create: int-ALB; Ext-ALB; Nginx; webservers; Bastion; RDS; EFS security group
 
+==================================================================================================================================================
 ## C. CREATING RESOURCES.
 
 **1. EFS:** Create EFS (smile-EFS) in the 2 availability zone , then create access point, that is a mount point for the file system. It will be created for the wwordpress and tooling site
 
-2. Create RDS: To create RDS, we need to create **KMS key and DB subnet group**
+**2. Create RDS:** To create RDS, we need to create **KMS key and DB subnet group**
 
 
-3. Creating Bastion Auto Scaling Group:
+**3. Creating Bastion Auto Scaling Group; reverse-proxy nginx server Auto Scaling Group; webserver Auto Scaling Group**
 
  1. Create instance and install all the basic packages.
 
@@ -73,20 +76,32 @@ Note: A total of 7 security groups were create: int-ALB; Ext-ALB; Nginx; webserv
 
  5. Create 3 centOs instances (Bastion, nginx and web servers)
 
- **The above 4 steps will be repead for reverse-proxy nginx server and webserver**
+ **The above 4 steps will be repeated for reverse-proxy nginx server and webserver**
 
-**Note: Package installation steps are in the file name "installation.conf"**
+**Notes:**
 
-**Note: Target group is meant for servers that are to be attached to LBs**
+Package installation steps are in the file name **"installation.conf"**
+
+* Target group is meant for **servers** that are to be attached to **LBs**
+
+* All the necessary package unique to each server are found in respective **userdata.md file**.
+
+* reverse proxy configuration files are found in **reverse.conf**
+
+**Note:** after creating the bastion autoscale group, login into aws RDS remotely through **bastion **to create **tooling-db** and **wordpressdb**
+
+**4. Creating External and Internal Load balancers(LB)**: Before creating the LBs, all the servers that are connected to the LB are: **nginx, wordpress and tooling server** 
+
+* **Target groups** are created for each of them which is then attached when creating the LBs, Its through this target group that you monitor the health of the servers.
+
+wordpress image
+"D:\project15-wordpress-page.png"
+
+tooling website image:
+"D:\Tooling-image.png"
+
 
  
-
-
-> internet gateway for VPC > subnet (public and Private) > route table (public and private)
-
-For Nat gateway, local subnet can talk to the internet while the internet can't communicate back.
-
-For internet gateway the communication is 2 ways.
 
 
 
